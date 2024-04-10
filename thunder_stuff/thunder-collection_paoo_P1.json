@@ -1,0 +1,42 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "paoo_P1",
+    "dateExported": "2024-04-10T20:25:22.438Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "a58bbf2a-fa45-4226-a279-8da5b1bb7934",
+            "colId": "f8602fc6-088b-4db6-b161-4da5494f884f",
+            "containerId": "",
+            "name": "consulta_cidade",
+            "url": "localhost:4000/consulta_coordenadas",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-04-10T19:36:04.511Z",
+            "modified": "2024-04-10T20:23:47.146Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"cidade\": \"São Paulo\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "486ba0df-25f8-4a42-ac8f-93a58f815cc3",
+            "colId": "f8602fc6-088b-4db6-b161-4da5494f884f",
+            "containerId": "",
+            "name": "obter cidades",
+            "url": "localhost:4000/consulta_coordenadas",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-04-10T20:24:23.001Z",
+            "modified": "2024-04-10T20:24:30.125Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}
