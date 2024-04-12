@@ -38,14 +38,25 @@ app.post('/consulta_coordenadas', async (req, res) => {
         const LatLon = { id, cidade, lat, lon }
         coordenadas[id] = LatLon
         id = (+id + 1).toString()
-        res.json(LatLon)
+
+        await axios.post('http://localhost:10000/eventos', {
+            tipo: 'CoordenadasCriadas',
+            dados: LatLon,
+        }) 
+
+        res.status(201).json(LatLon)
+
     }
     catch (erro){
-        res.status(400).json({ erro: 'Cidade nÃ£o encontrada.'})
+        res.status(400).json({ erro: 'Cidade naoo encontrada.'})
     
     }
-
 })
+
+app.post("/eventos", (req, res) => {
+    console.log(req.body);
+    res.status(200).send({ msg: "ok" });
+});
 
 const port = 4000
 app.listen(port,() => console.log(`Coordenadas. Porta ${port}.`))
