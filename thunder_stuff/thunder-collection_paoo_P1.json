@@ -1,25 +1,40 @@
 {
     "client": "Thunder Client",
     "collectionName": "paoo_P1",
-    "dateExported": "2024-04-10T20:25:22.438Z",
+    "dateExported": "2024-04-12T00:14:46.449Z",
     "version": "1.1",
-    "folders": [],
+    "folders": [
+        {
+            "_id": "c3514d30-5d12-4812-852b-04120471f368",
+            "name": "coordenadas",
+            "containerId": "",
+            "created": "2024-04-11T21:43:54.948Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "e82a11ab-62be-4176-a272-aa2cae9d36e9",
+            "name": "condicoes",
+            "containerId": "",
+            "created": "2024-04-11T21:44:06.255Z",
+            "sortNum": 20000
+        }
+    ],
     "requests": [
         {
             "_id": "a58bbf2a-fa45-4226-a279-8da5b1bb7934",
             "colId": "f8602fc6-088b-4db6-b161-4da5494f884f",
-            "containerId": "",
-            "name": "consulta_cidade",
+            "containerId": "c3514d30-5d12-4812-852b-04120471f368",
+            "name": "salva coordenada",
             "url": "localhost:4000/consulta_coordenadas",
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-04-10T19:36:04.511Z",
-            "modified": "2024-04-10T20:23:47.146Z",
+            "modified": "2024-04-10T22:11:54.004Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"cidade\": \"São Paulo\"\n}",
+                "raw": "{\n  \"cidade\": \"Rio de Janeiro\"\n}",
                 "form": []
             },
             "tests": []
@@ -27,13 +42,46 @@
         {
             "_id": "486ba0df-25f8-4a42-ac8f-93a58f815cc3",
             "colId": "f8602fc6-088b-4db6-b161-4da5494f884f",
-            "containerId": "",
+            "containerId": "c3514d30-5d12-4812-852b-04120471f368",
             "name": "obter cidades",
-            "url": "localhost:4000/consulta_coordenadas",
+            "url": "localhost:4000/consulta_coordenadas/Rio de Janeiro",
             "method": "GET",
             "sortNum": 20000,
             "created": "2024-04-10T20:24:23.001Z",
-            "modified": "2024-04-10T20:24:30.125Z",
+            "modified": "2024-04-10T22:12:19.195Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "5512e788-da8c-47bc-8261-a5cb52caa193",
+            "colId": "f8602fc6-088b-4db6-b161-4da5494f884f",
+            "containerId": "e82a11ab-62be-4176-a272-aa2cae9d36e9",
+            "name": "salva condicao",
+            "url": "localhost:5000/consulta_coordenadas/1/consulta_condicoes",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-04-11T21:44:48.258Z",
+            "modified": "2024-04-11T23:55:32.845Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"lat\": \"-22.9110137\",\n  \"lon\": \"-43.2093727\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "90ab209b-4037-4412-9274-fccb8d19fc06",
+            "colId": "f8602fc6-088b-4db6-b161-4da5494f884f",
+            "containerId": "e82a11ab-62be-4176-a272-aa2cae9d36e9",
+            "name": "obter condicoes",
+            "url": "localhost:5000/consulta_coordenadas/1/consulta_condicoes",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2024-04-11T22:06:21.797Z",
+            "modified": "2024-04-11T22:06:59.671Z",
             "headers": [],
             "params": [],
             "tests": []

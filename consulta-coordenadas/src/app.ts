@@ -34,19 +34,18 @@ app.post('/consulta_coordenadas', async (req, res) => {
     try{
         const response = await axios.get(url)
         const {lat, lon } = response.data[0]
-        console.log(lat, lon)
+        //console.log(lat, lon)
         const LatLon = { id, cidade, lat, lon }
         coordenadas[id] = LatLon
         id = (+id + 1).toString()
         res.json(LatLon)
     }
     catch (erro){
-        res.status(400).json({ erro: 'Cidade não encontrada.'})
+        res.status(400).json({ erro: 'Cidade nÃ£o encontrada.'})
     
     }
 
 })
-
 
 const port = 4000
 app.listen(port,() => console.log(`Coordenadas. Porta ${port}.`))
