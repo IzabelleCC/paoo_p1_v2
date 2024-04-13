@@ -1,8 +1,9 @@
 import express from 'express'
 import { v4 as uuidv4 } from 'uuid'
 
-require('dotenv').config()
-const axios = require ('axios')
+import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express()
 app.use(express.json())
@@ -20,13 +21,12 @@ interface Condicao {
 const condicoes: Record<string, Condicao[]> = {}
 
 
-app.post('/consulta_coordenadas/:id/consulta_condicoes', async (req, res) => {
+app.post('/coordenadas/:id/condicoes', async (req, res) => {
     const idObs = uuidv4();
     const { lat, lon } = req.body
     const { APPID, UNITS, LANGUAGE, URL_BASE } = process.env
     const url = `${URL_BASE}?lat=${lat}&lon=${lon}&appid=${APPID}&units=${UNITS}&lang=${LANGUAGE}`
-   // console.log(lat, lon)
-   // console.log(url)
+
     
     try{
         const response = await axios.get(url)
@@ -41,8 +41,8 @@ app.post('/consulta_coordenadas/:id/consulta_condicoes', async (req, res) => {
         condicoes[req.params.id] = condicaoDaCidade
 
         await axios.post('http://localhost:10000/eventos', {
-            tipo: 'CondicaoCriada',
-            dados: condicaoDaCidade, coordenadaId: req.params.id,
+            tipo: 'CondicoesDaCidadeCriada',
+            dados: {id: idObs, name, lat, lon, dt, feels_like, description, coordenadaId: req.params.id}
         })
 
         res.status(201).json(condicaoDaCidade)        
@@ -57,9 +57,11 @@ app.post("/eventos", (req, res) => {
     res.status(200).send({ msg: "ok" });
 });
 
-app.get('/consulta_coordenadas/:id/consulta_condicoes', (req, res) => {
+app.get('/coordenadas/:id/condicoes', (req, res) => {
     res.json(condicoes[req.params.id] || [])
-})
+ })
 
 const port = 5000
 app.listen(port,() => console.log(`Coordenadas. Porta ${port}.`))
+
+export {Condicao}

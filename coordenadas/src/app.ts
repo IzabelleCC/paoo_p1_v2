@@ -1,14 +1,9 @@
 import express from 'express'
-
-require('dotenv').config()
-
-
-const axios = require ('axios')
+import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 
 
-
-//const url = `${URL_BASE}?q=${Q}&limit=${LIMIT}&appid=${APPID}&lang=${LANGUAGE}`
-//console.log(url)
 const app = express()
 app.use(express.json())
 
@@ -22,12 +17,13 @@ interface LatLon {
 const coordenadas: Record<string, LatLon> = {}
 let id: string = '1'
 
-app.get('/consulta_coordenadas', (req, res) => {
+app.get('/coordenadas', (req, res) => {
     res.json(coordenadas)
 })
 
-app.post('/consulta_coordenadas', async (req, res) => {
+app.post('/coordenadas', async (req, res) => {
     const  { cidade }  = req.body
+
     const { APPID, LIMIT, LANGUAGE,  URL_BASE } = process.env
     const url = `${URL_BASE}?q=${cidade}&limit=${LIMIT}&appid=${APPID}&lang=${LANGUAGE}`
     
@@ -41,7 +37,7 @@ app.post('/consulta_coordenadas', async (req, res) => {
 
         await axios.post('http://localhost:10000/eventos', {
             tipo: 'CoordenadasCriadas',
-            dados: LatLon,
+            dados: { id, cidade, lat, lon }
         }) 
 
         res.status(201).json(LatLon)
@@ -60,3 +56,5 @@ app.post("/eventos", (req, res) => {
 
 const port = 4000
 app.listen(port,() => console.log(`Coordenadas. Porta ${port}.`))
+
+export {LatLon}
