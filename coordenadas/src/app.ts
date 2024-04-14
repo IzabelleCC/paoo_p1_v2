@@ -33,12 +33,15 @@ app.post('/coordenadas', async (req, res) => {
         //console.log(lat, lon)
         const LatLon = { id, cidade, lat, lon }
         coordenadas[id] = LatLon
-        id = (+id + 1).toString()
+        
 
         await axios.post('http://localhost:10000/eventos', {
             tipo: 'CoordenadasCriadas',
             dados: { id, cidade, lat, lon }
-        }) 
+        })
+        
+        id = (+id + 1).toString()
+        
 
         res.status(201).json(LatLon)
 

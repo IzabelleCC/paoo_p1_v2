@@ -8,42 +8,35 @@ import { Condicao } from '../../condicoes/src/app'
 const app = express()
 app.use(express.json())
 
-type TipoDeEvento = 'CoordenadasCriadas' | 'CondicoesDaCidadeCriada';
-
-interface BaseConsulta {
-    [id: string]: LatLon | Condicao[]
-}
 
 
-const baseConsulta: BaseConsulta = {};
+
+const baseConsulta: Record<string, {coordenada: LatLon, condicao: Condicao[]}> = {}
+
 
 const funcoes = {
-    CoordenadasCriadas: (latLon: LatLon) => {
-        baseConsulta[latLon.id] = latLon
+    
+    CoordenadasCriadas: (coordenada: LatLon) => {
+        baseConsulta[coordenada.id] = { coordenada, condicao: [] } 
     },
     CondicoesDaCidadeCriada: (condicao: Condicao) => {
-        let condicoesDaCidade = baseConsulta[condicao.id] as Condicao[];
-        if (!Array.isArray(condicoesDaCidade)) {
-            condicoesDaCidade = [];
-        }
-        condicoesDaCidade.push(condicao);
-        baseConsulta[condicao.id] = condicoesDaCidade;
+        const condicoes= baseConsulta[condicao.coordenadaId]?.condicao || []
+        condicoes.push(condicao)
     }
+    
 }
 
 app.get('/coordenadas', (req, res) => {
+    console.log(baseConsulta)
     res.json(baseConsulta)
 })
 
 
 app.post('/eventos', (req, res) => {
-    const { tipo, dados } = req.body;
-    if (tipo in funcoes) {
-        (funcoes[tipo as TipoDeEvento])(dados);
-        res.status(200).send(baseConsulta);
-    } else {
-        res.status(400).send({ error: 'Tipo de evento desconhecido' });
-    }
+    type TipoDeEvento = 'CoordenadasCriadas' | 'CondicoesDaCidadeCriada';
+    const tipoDeEvento: TipoDeEvento = req.body.tipo;
+    funcoes[tipoDeEvento](req.body.dados);
+    res.status(200).send(baseConsulta);
 })
 
 const port = 6000
