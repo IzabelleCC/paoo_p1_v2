@@ -24,11 +24,13 @@ const condicoes: Record<string, Condicao[]> = {}
 
 app.post('/coordenadas/:id/condicoes', async (req, res) => {
     const idCond = uuidv4();
-    const { lat, lon } = req.body
+
+    const consulta = await axios.get('http://localhost:6000/coordenadas')
+    const lat = consulta.data[req.params.id].coordenada.lat
+    const lon= consulta.data[req.params.id].coordenada.lon
     const { APPID, UNITS, LANGUAGE, URL_BASE } = process.env
     const url = `${URL_BASE}?lat=${lat}&lon=${lon}&appid=${APPID}&units=${UNITS}&lang=${LANGUAGE}`
 
-    
     try{
         const response = await axios.get(url)
         const feels_like = response.data.main.feels_like
