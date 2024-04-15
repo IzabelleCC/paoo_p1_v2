@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "paoo_P1",
-    "dateExported": "2024-04-13T03:27:26.941Z",
+    "dateExported": "2024-04-15T01:29:34.579Z",
     "version": "1.1",
     "folders": [
         {
@@ -36,7 +36,7 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-04-10T19:36:04.511Z",
-            "modified": "2024-04-13T03:16:58.641Z",
+            "modified": "2024-04-15T01:25:21.154Z",
             "headers": [],
             "params": [],
             "body": {
@@ -65,16 +65,16 @@
             "colId": "f8602fc6-088b-4db6-b161-4da5494f884f",
             "containerId": "e82a11ab-62be-4176-a272-aa2cae9d36e9",
             "name": "salva condicao",
-            "url": "localhost:5000/coordenadas/2/condicoes",
+            "url": "localhost:5000/coordenadas/condicoes",
             "method": "POST",
             "sortNum": 40000,
             "created": "2024-04-11T21:44:48.258Z",
-            "modified": "2024-04-13T03:17:26.113Z",
+            "modified": "2024-04-15T01:25:29.478Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"lat\": \"-23.5506507\",\n  \"lon\": \"-46.6333824\"\n}",
+                "raw": "{\n  \"cidade\": \"Sao Paulo\"\n}",
                 "form": []
             },
             "tests": []
