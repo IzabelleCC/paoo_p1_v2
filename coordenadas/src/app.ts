@@ -22,13 +22,13 @@ app.get('/coordenadas', (req, res) => {
 })
 
 app.post('/coordenadas', async (req, res) => {
-    const  { cidade }  = req.body
+    const { cidade }  = req.body
     const { APPID, LIMIT, LANGUAGE,  URL_BASE } = process.env
     const url = `${URL_BASE}?q=${cidade}&limit=${LIMIT}&appid=${APPID}&lang=${LANGUAGE}`
     
     try{
         const response = await axios.get(url)
-        const {lat, lon } = response.data[0]
+        const {lat, lon} = response.data[0]
         const LatLon = { id, cidade, lat, lon }
         coordenadas[id] = LatLon
       

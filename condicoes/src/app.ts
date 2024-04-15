@@ -22,12 +22,27 @@ interface Condicao {
 const condicoes: Record<string, Condicao[]> = {}
 
 
-app.post('/coordenadas/:id/condicoes', async (req, res) => {
+app.post('/coordenadas/condicoes', async (req, res) => {
     const idCond = uuidv4();
 
     const consulta = await axios.get('http://localhost:6000/coordenadas')
-    const lat = consulta.data[req.params.id].coordenada.lat
-    const lon= consulta.data[req.params.id].coordenada.lon
+    const baseconsulta = consulta.data
+    const cidadeRecebida = req.body.cidade
+    let idCoordenada : string = ''
+    for( let i in baseconsulta){
+        let cidade = baseconsulta[i].coordenada.cidade
+       // console.log(`CidadeRecebida: ${cidadeRecebida}`)
+      //  console.log(`Cidade: ${cidade}`)
+        if(cidade === cidadeRecebida){
+            idCoordenada = baseconsulta[i].coordenada.id
+            break
+        }
+    }
+
+   // console.log(`idCoordenada: ${idCoordenada}`)
+
+    const lat = consulta.data[idCoordenada].coordenada.lat
+    const lon= consulta.data[idCoordenada].coordenada.lon
     const { APPID, UNITS, LANGUAGE, URL_BASE } = process.env
     const url = `${URL_BASE}?lat=${lat}&lon=${lon}&appid=${APPID}&units=${UNITS}&lang=${LANGUAGE}`
 
@@ -37,15 +52,15 @@ app.post('/coordenadas/:id/condicoes', async (req, res) => {
         const description = response.data.weather[0].description
         const dt = response.data.dt
         const name = response.data.name
-        const condicaoDaCidade : Condicao[] = condicoes[req.params.id]  || []
+        const condicaoDaCidade : Condicao[] = condicoes[idCoordenada]  || []
 
-        condicaoDaCidade.push({ idCond, name, lat, lon, dt, feels_like, description, coordenadaId: req.params.id})
+        condicaoDaCidade.push({ idCond, name, lat, lon, dt, feels_like, description, coordenadaId: idCoordenada})
 
-        condicoes[req.params.id] = condicaoDaCidade
+        condicoes[idCoordenada] = condicaoDaCidade
 
         await axios.post('http://localhost:10000/eventos', {
             tipo: 'CondicoesDaCidadeCriada',
-            dados: {id: idCond, name, lat, lon, dt, feels_like, description, coordenadaId: req.params.id}
+            dados: {id: idCond, name, lat, lon, dt, feels_like, description, coordenadaId:idCoordenada}
         })
 
         res.status(201).json(condicaoDaCidade)        
