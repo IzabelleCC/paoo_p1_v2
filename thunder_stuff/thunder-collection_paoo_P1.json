@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "paoo_P1",
-    "dateExported": "2024-04-15T01:29:34.579Z",
+    "dateExported": "2024-04-17T17:52:31.399Z",
     "version": "1.1",
     "folders": [
         {
@@ -51,14 +51,12 @@
             "colId": "f8602fc6-088b-4db6-b161-4da5494f884f",
             "containerId": "c3514d30-5d12-4812-852b-04120471f368",
             "name": "obter cidades",
-            "url": "localhost:4000/consulta_coordenadas/Rio de Janeiro",
+            "url": "localhost:4000/coordenadas",
             "method": "GET",
             "sortNum": 20000,
             "created": "2024-04-10T20:24:23.001Z",
-            "modified": "2024-04-10T22:12:19.195Z",
-            "headers": [],
-            "params": [],
-            "tests": []
+            "modified": "2024-04-17T17:52:22.663Z",
+            "headers": []
         },
         {
             "_id": "5512e788-da8c-47bc-8261-a5cb52caa193",
@@ -84,14 +82,12 @@
             "colId": "f8602fc6-088b-4db6-b161-4da5494f884f",
             "containerId": "e82a11ab-62be-4176-a272-aa2cae9d36e9",
             "name": "obter condicoes",
-            "url": "localhost:5000/consulta_coordenadas/1/consulta_condicoes",
+            "url": "localhost:5000/coordenadas/1/condicoes",
             "method": "GET",
             "sortNum": 50000,
             "created": "2024-04-11T22:06:21.797Z",
-            "modified": "2024-04-11T22:06:59.671Z",
-            "headers": [],
-            "params": [],
-            "tests": []
+            "modified": "2024-04-17T17:52:19.890Z",
+            "headers": []
         },
         {
             "_id": "6a93cfd9-c8ed-4ffd-a8b3-89c80eff0b2c",
