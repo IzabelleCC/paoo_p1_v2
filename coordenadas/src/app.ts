@@ -7,43 +7,43 @@ dotenv.config();
 const app = express()
 app.use(express.json())
 
-interface LatLon {
-    id: string;
-    cidade: string;
+interface Coordenada {
+    idCoordenada: string;
+    nomeCidade: string;
     lat: number;
     lon: number;
 }
 
-const coordenadas: Record<string, LatLon> = {}
-let id: string = '1'
+const coordenadas: Record<string, Coordenada> = {}
+let idCoordenada: string = '1'
 
 app.get('/coordenadas', (req, res) => {
     res.json(coordenadas)
 })
 
 app.post('/coordenadas', async (req, res) => {
-    const { cidade }  = req.body
+    const { nomeCidade }  = req.body
     const { APPID, LIMIT, LANGUAGE,  URL_BASE } = process.env
-    const url = `${URL_BASE}?q=${cidade}&limit=${LIMIT}&appid=${APPID}&lang=${LANGUAGE}`
+    const url = `${URL_BASE}?q=${nomeCidade}&limit=${LIMIT}&appid=${APPID}&lang=${LANGUAGE}`
     
     try{
         const response = await axios.get(url)
         const {lat, lon} = response.data[0]
-        const LatLon = { id, cidade, lat, lon }
-        coordenadas[id] = LatLon
+        const Coordenada = { idCoordenada, nomeCidade, lat, lon }
+        coordenadas[idCoordenada] = Coordenada
       
         await axios.post('http://localhost:10000/eventos', {
             tipo: 'CoordenadasCriadas',
-            dados: { id, cidade, lat, lon }
+            dados: { idCoordenada, nomeCidade, lat, lon }
         })
         
-        id = (+id + 1).toString()
+        idCoordenada = (+idCoordenada + 1).toString()
 
-        res.status(201).json(LatLon)
+        res.status(201).json(Coordenada)
 
     }
     catch (erro){
-        res.status(400).json({ erro: 'Cidade naoo encontrada.'})
+        res.status(400).json({ erro: 'nomeCidade nao encontrada.'})
     
     }
 })
@@ -56,4 +56,4 @@ app.post("/eventos", (req, res) => {
 const port = 4000
 app.listen(port,() => console.log(`Coordenadas. Porta ${port}.`))
 
-export {LatLon}
+export {Coordenada}

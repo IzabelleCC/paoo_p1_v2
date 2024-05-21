@@ -9,8 +9,8 @@ const app = express()
 app.use(express.json())
 
 interface Condicao {
-    idCond: string;
-    name: string;
+    idCondicao: string;
+    nomeCidade: string;
     lat: number;
     lon: number;
     dt: number;
@@ -23,7 +23,7 @@ const condicoes: Record<string, Condicao[]> = {}
 
 
 app.post('/coordenadas/condicoes', async (req, res) => {
-    const idCond = uuidv4();
+    const idCondicao = uuidv4();
 
     const consulta = await axios.get('http://localhost:6000/coordenadas')
     const baseconsulta = consulta.data
@@ -51,16 +51,16 @@ app.post('/coordenadas/condicoes', async (req, res) => {
         const feels_like = response.data.main.feels_like
         const description = response.data.weather[0].description
         const dt = response.data.dt
-        const name = response.data.name
+        const nomeCidade = response.data.nomeCidade
         const condicaoDaCidade : Condicao[] = condicoes[idCoordenada]  || []
 
-        condicaoDaCidade.push({ idCond, name, lat, lon, dt, feels_like, description, coordenadaId: idCoordenada})
+        condicaoDaCidade.push({ idCondicao, nomeCidade, lat, lon, dt, feels_like, description, idCoordenada})
 
         condicoes[idCoordenada] = condicaoDaCidade
 
         await axios.post('http://localhost:10000/eventos', {
             tipo: 'CondicoesDaCidadeCriada',
-            dados: {id: idCond, name, lat, lon, dt, feels_like, description, coordenadaId:idCoordenada}
+            dados: {id: idCondicao, nomeCidade, lat, lon, dt, feels_like, description, coordenadaId:idCoordenada}
         })
 
         res.status(201).json(condicaoDaCidade)        

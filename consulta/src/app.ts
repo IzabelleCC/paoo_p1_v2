@@ -1,13 +1,33 @@
 import express from 'express'
 import axios from 'axios'
 
-import { LatLon } from '../../coordenadas/src/app'
-import { Condicao } from '../../condicoes/src/app'
+
 
 
 const app = express()
 app.use(express.json())
 
+interface Cidade{
+    id: string;
+    nome: string;
+}
+
+interface LatLon {
+    id: string;
+    cidade: string;
+    lat: number;
+    lon: number;
+}
+interface Condicao {
+    idCond: string;
+    name: string;
+    lat: number;
+    lon: number;
+    dt: number;
+    feels_like: number;
+    description: string;
+    coordenadaId: string;
+}
 
 
 
